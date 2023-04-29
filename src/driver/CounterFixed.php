@@ -3,7 +3,7 @@
 
 namespace Creatcode\throttle\driver;
 
-use think\Cache;
+use think\Cache\Driver;
 
 /**
  * 计数器固定窗口算法
@@ -13,7 +13,7 @@ use think\Cache;
 class CounterFixed extends ThrottleAbstract
 {
 
-    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Cache $cache): bool
+    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Driver $cache): bool
     {
         $cur_requests = (int) $cache->get($key, 0);
         $now = (int) $micronow;

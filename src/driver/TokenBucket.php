@@ -3,7 +3,7 @@
 
 namespace Creatcode\throttle\driver;
 
-use think\Cache;
+use think\Cache\Driver;
 
 /**
  * 令牌桶算法
@@ -12,7 +12,7 @@ use think\Cache;
  */
 class TokenBucket extends ThrottleAbstract
 {
-    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Cache $cache): bool
+    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Driver $cache): bool
     {
         if ($max_requests <= 0 || $duration <= 0) return false;
 

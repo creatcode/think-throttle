@@ -3,7 +3,7 @@
 
 namespace Creatcode\throttle\driver;
 
-use think\Cache;
+use think\Cache\Driver;
 
 /**
  * 计数器滑动窗口算法
@@ -12,7 +12,7 @@ use think\Cache;
  */
 class CounterSlider extends ThrottleAbstract
 {
-    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Cache $cache): bool
+    public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Driver $cache): bool
     {
         $history = $cache->get($key, []);
         $now = (int) $micronow;

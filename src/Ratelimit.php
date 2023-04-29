@@ -10,6 +10,7 @@ use think\Cache;
 use think\exception\HttpResponseException;
 use Creatcode\throttle\driver\CounterFixed;
 use Creatcode\throttle\driver\ThrottleAbstract;
+use think\cache\Driver;
 use think\Request;
 use think\Response;
 use function sprintf;
@@ -46,7 +47,7 @@ class Ratelimit
 
     /**
      * 缓存对象
-     * @var Cache
+     * @var Driver
      */
     protected $cache;
 
@@ -191,10 +192,10 @@ class Ratelimit
 
     /**
      * 设置缓存驱动
-     * @param Cache $cache
+     * @param Driver $cache
      * @return $this
      */
-    public function setCache(Cache $cache): self
+    public function setCache(Driver $cache): self
     {
         $this->cache = $cache;
         return $this;
@@ -230,11 +231,12 @@ class Ratelimit
      * @param Request $request
      * @return HttpResponseException
      */
-    public function buildLimitException(int $wait_seconds, Request $request): HttpResponseException
+    public function buildLimitException($wait_seconds, Request $request): HttpResponseException
     {
         $visitFail = $this->config['visit_fail_response'] ?? null;
         if ($visitFail instanceof \Closure) {
-            $response = App::invokeFunction($visitFail, [$this, $request, $wait_seconds]);
+            // $response = App::invokeFunction($visitFail, [$this, $request, $wait_seconds]);
+            $response = call_user_func_array($visitFail, [$this, $request, $wait_seconds]);
             if (!$response instanceof Response) {
                 throw new \TypeError(sprintf('The closure must return %s instance', Response::class));
             }

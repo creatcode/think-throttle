@@ -3,7 +3,7 @@
 
 namespace Creatcode\throttle\driver;
 
-use think\Cache;
+use think\Cache\Driver;
 
 abstract class ThrottleAbstract
 {
@@ -18,10 +18,10 @@ abstract class ThrottleAbstract
      * @param float $micronow       当前时间戳,可含毫秒
      * @param int $max_requests     允许最大请求数
      * @param int $duration         限流时长
-     * @param Cache $cache 缓存对象
+     * @param Driver $cache 缓存对象
      * @return bool
      */
-    abstract public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Cache $cache): bool;
+    abstract public function allowRequest(string $key, float $micronow, int $max_requests, int $duration, Driver $cache): bool;
 
     /**
      * 计算距离下次合法请求还有多少秒
