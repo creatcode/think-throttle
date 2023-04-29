@@ -47,9 +47,9 @@ return [
     return $user_id ;
 },
 ```
-```
-实例二：也可以在回调函数里针对不同控制器和方法定制生成key，中间件会进行转换:
 
+示例二：也可以在回调函数里针对不同控制器和方法定制生成key，中间件会进行转换:
+```
 'key' => function($throttle, $request) {
     return '__CONTROLLER__/__ACTION__/__IP__';
 },
