@@ -1,0 +1,28 @@
+{
+    "name": "creatcode/think-throttle",
+    "description": "tp5.0接口限流",
+    "type": "think-extend",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "creatcode",
+            "email": "872864670@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Creatcode\\throttle\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "require-dev": {
+        "topthink/framework": "~5.0.0"
+    },
+    "extra": {
+        "think-config": {
+            "throttle": "src/config.php"
+        }
+    }
+}
