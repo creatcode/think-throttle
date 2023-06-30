@@ -8,8 +8,10 @@
 
 ### 使用
 例如：
+```
 $rate = new Ratelimit([]);
 $rate->exec();
+```
 
 ### 安装
 ```
