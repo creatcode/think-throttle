@@ -82,7 +82,7 @@ class Ratelimit
      * @param Request $request
      * @return Response
      */
-    public function exec(Request $request): Response
+    public function exec(Request $request = null): Response
     {
         $request = is_null($request) ? Request::instance() : $request;
         $allow = $this->allowRequest($request);
@@ -106,7 +106,7 @@ class Ratelimit
     protected function allowRequest(Request $request): bool
     {
         // 若请求类型不在限制内
-        if (!in_array($request->method(), $this->config['visit_method'])) {
+        if (!in_array($request->method(), $this->config['visit_method']) && !in_array('*', $this->config['visit_method'])) {
             return true;
         }
 
