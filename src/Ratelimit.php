@@ -70,21 +70,26 @@ class Ratelimit
 
     /**
      * Ratelimit constructor.
+     *
+     * @param array $options 配置
      */
-    public function __construct()
+    public function __construct(array $options = [])
     {
         $this->cache  = Cache::init();
         $this->config = array_merge(static::$default_config, config('throttle'));
+        if ($options) {
+            $this->config = array_merge($this->config, $options);
+        }
     }
 
     /**
      * 处理限制访问
-     * @param Request $request
+     *
      * @return Response
      */
-    public function exec(Request $request = null): Response
+    public function exec(): Response
     {
-        $request = is_null($request) ? Request::instance() : $request;
+        $request = Request::instance();
         $allow = $this->allowRequest($request);
         if (!$allow) {
             // 访问受限
@@ -178,17 +183,6 @@ class Ratelimit
         $max_requests = (int) $num;
         $duration = static::$duration[$period] ?? (int) $period;
         return [$max_requests, $duration];
-    }
-
-    /**
-     * 设置缓存键前缀
-     * @param string $prefix
-     * @return $this
-     */
-    public function setPrefix(string $prefix): self
-    {
-        $this->config['prefix'] = $prefix;
-        return $this;
     }
 
     /**
