@@ -84,6 +84,7 @@ class Ratelimit
      */
     public function exec(Request $request): Response
     {
+        $request = is_null($request) ? Request::instance() : $request;
         $allow = $this->allowRequest($request);
         if (!$allow) {
             // 访问受限
@@ -177,6 +178,17 @@ class Ratelimit
         $max_requests = (int) $num;
         $duration = static::$duration[$period] ?? (int) $period;
         return [$max_requests, $duration];
+    }
+
+    /**
+     * 设置缓存键前缀
+     * @param string $prefix
+     * @return $this
+     */
+    public function setPrefix(string $prefix): self
+    {
+        $this->config['prefix'] = $prefix;
+        return $this;
     }
 
     /**
